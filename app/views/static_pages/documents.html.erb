@@ -1,0 +1,62 @@
+<% provide(:title, 'All users') %>
+<div class="row">
+  <aside class="col-md-3">
+    <section class="user_info">
+      <%= render 'shared/user_info' %>
+    </section>
+  </aside>
+
+  <% if current_user.committee == "Peloponnesian War" %>
+  <div class="col-md-9">
+    <h4>Official Regions of Peloponnesian War - Sicilian Theatre Map</h4>
+    <img width="700" height="500" src="https://docs.google.com/drawings/d/1QF_DoqbGpddtVHkCH9XwDLi7rZE3xp9UU5M7VeFZx2o/pub?w=960&amp;h=720">
+    <br>
+    <h4>Official Regions of Peloponnesian War - Aegean Theatre Map</h4>
+    <img width="850" height="600" src="https://docs.google.com/drawings/d/15kNEw63pTlnWlt4B5zjHgB_L2_FRZADndrc7FKvoIxM/pub?w=960&amp;h=720">
+    <br>
+    <h4>Map Keys</h4>
+    <img width= "600" height= "500" src="https://docs.google.com/drawings/d/1WGbqx-rv0G_JAoDY-GPdb5oxZd20-9s2bVtTQQSeoBQ/pub?w=480&amp;h=360">
+  </div>
+
+
+  <% elsif current_user.committee == "Future of Chinese International Relations" %>
+  <div class="col-md-9">
+    <h4>National Level Dataset</h4>
+    <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <br>
+    <h4>Individual Level Dataset</h4>
+    <% if current_user.position == "North" %>
+      <iframe width = "800" height = "500"  src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=2019299676&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "East" %>
+      <iframe width = "800" height = "500"  src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=2842841&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "Southwest" %>
+      <iframe width = "800" height = "500"  src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=1060579457&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "Northwest" %>
+        <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=1088059573&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "Southcentral" %>
+        <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "Northeast" %>
+        <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=1053547823&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "Military" %>
+        <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=135127493&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "National Security" %>
+        <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=401492719&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "Intellegence" %>
+        <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=1802951849&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "Foreign Affairs" %>
+        <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=636444595&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "Environment" %>
+        <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=2121938595&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "Premier" %>
+        <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=1318160870&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% elsif current_user.position == "Economy" %>
+        <iframe width = "800" height = "500" src="https://docs.google.com/spreadsheets/d/1-YHaCaB5pCWkeTR3Oy2TXiSvzz2STNxSbuu6_-N2lAY/pubhtml?gid=1684839005&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+    <% end %>
+
+  <% end %>
+
+
+  </div>
+
+</div>
+

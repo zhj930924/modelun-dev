@@ -1,0 +1,9 @@
+<% directive = Directive.find_by(id: directive_id) %>
+<%= form_for(directive.signatures.build, remote: true, html: { id: "sign_form"}) do |f| %>
+    <%= hidden_field_tag :user_id, current_user[:id] %>
+    <%= hidden_field_tag :directive_id, directive_id %>
+    <b>Signers</b>(<%= link_to 'sign', "#", :onclick => "$('#sign_form').submit()" %>):
+    <% directive.signers.each do |signer| %>
+        <%= signer.position %>
+    <% end %>
+<% end %>

@@ -1,0 +1,16 @@
+<% provide(:title, "Contact") %>
+<h1>Contact</h1>
+<p>
+  Contact the Ruby on Rails Tutorial about the sample app at the
+  <a href= "http://www.railstutorial.org/#contact">contact page</a>
+</p>
+<% @users.each_with_index do |user, index| %>
+    <tr>
+        <td><%= index +=1 %></td>
+        <td><%= user.name %></td>
+        <td>
+            <%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation",
+                    "data-sid" => current_user.id, "data-rip" => user.id %>
+        </td>
+    </tr>
+<% end %>

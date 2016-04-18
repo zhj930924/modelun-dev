@@ -1,0 +1,28 @@
+<div class = "reply">
+  <% if !comment.nil? %>
+    <% from_reply_form ||= nil %>
+
+    <b>Type:</b> <%= comment[:function] %>
+    <span>
+      <p><%= comment.content %></p>
+
+      <div class="content-small">
+        Created on:
+        <%= I18n.l comment.created_at.in_time_zone, :format => :short %>
+        <% unless from_reply_form %>
+            <% if current_user.type == "Crisis" %>
+            <%= link_to 'reply', new_comment_path(comment.id), :target => "_blank" %>
+            <% end %>
+        <% end %>
+      </div>
+
+  <% else %>
+      <span><p class="content"><%= link_to 'reply', directive.comments.new, :target => "_blank" %></p></span> <br>
+
+  <% end %>
+  <br>
+  </span>
+
+</div>
+
+<!--NEED CSS SHEET HERE-->

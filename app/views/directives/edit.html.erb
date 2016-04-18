@@ -1,0 +1,21 @@
+<h2><%= @directive.type %> Editing</h2>
+<div class="row">
+    <%= form_for(@directive) do |f| %>
+      
+      <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title, :value => @directive.title, class: 'form-control' %>
+      </div>
+    
+      <div class="field">
+        <%= f.label :content %><br />
+        <%= f.text_area :content, :value => @directive.content, :class => "tinymce" %>
+        <%= tinymce %>
+      </div>
+    
+      <div class="actions">
+        <%= f.submit "Update" %>
+      </div>
+    <% end %>
+</div>
+<%= link_to "Back", :back %>

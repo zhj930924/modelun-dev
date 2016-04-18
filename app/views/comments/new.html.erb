@@ -1,0 +1,40 @@
+<h1>Reply</h1>
+
+<% if @comment.parent %>
+  <%= render 'comment', comment: @comment.parent, from_reply_form: true %>
+<% elsif params[:directive_id] %>
+    <% directive = Directive.find_by(id: params[:directive_id]) %>
+    <b>Author:</b>
+    <% directive.users.each do |n| %>
+        <%= n.position %>,
+    <% end %><br>
+    <b>Title: </b>
+    <%= directive.title %><br>
+    <b>Content: </b><br>
+    <%= render inline: directive.content %>
+
+<% end %>
+
+<%= form_for(@comment) do |f| %>
+  <% if @comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+        <% @comment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <%= f.hidden_field :function %>
+  <%= f.hidden_field :parent_id %>
+  <%= f.hidden_field :directive_id %>
+
+  <div class="form-group">
+    <%= f.label :content %>
+    <%= f.text_area :content, class: 'form-control', required: true %>
+  </div>
+
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>

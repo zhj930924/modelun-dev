@@ -1,0 +1,52 @@
+michael:
+  real_name: Michael Example
+  committee: BooShoot
+  position: major_booshooter
+  email: michael@example.com
+  password_digest: <%= User.digest('password') %>
+  admin: true
+  activated: true
+  type: Crisis
+  activated_at: <%= Time.zone.now %>
+
+archer:
+  real_name: Sterling Archer
+  committee: Archer
+  position: Archer
+  email: duchess@example.gov
+  password_digest: <%= User.digest('password') %>
+  activated: true
+  type: Delegate
+  activated_at: <%= Time.zone.now %>
+
+lana:
+  real_name: Lana Kane
+  committee: Archer
+  position: Lana
+  email: hands@example.gov
+  password_digest: <%= User.digest('password') %>
+  activated: true
+  type: Crisis
+  activated_at: <%= Time.zone.now %>
+
+malory:
+  real_name: Malory Archer
+  committee: Archer
+  position: Dutchess
+  email: boss@example.gov
+  password_digest: <%= User.digest('password') %>
+  activated: true
+  type: Crisis
+  activated_at: <%= Time.zone.now %>
+
+<% 30.times do |n| %>
+user_<%= n %>:
+  real_name:  <%= "User #{n}" %>
+  email: <%= "user-#{n}@example.com" %>
+  committee: Random
+  position: <%= "rando #{n}" %>
+  password_digest: <%= User.digest('password') %>
+  activated: true
+  type: Delegate
+  activated_at: <%= Time.zone.now %>
+<% end %>

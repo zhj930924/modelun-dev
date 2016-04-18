@@ -1,0 +1,8 @@
+<li>
+  <b>Position: <%= user.position %><br></b>
+  Created Resolutions: <%= user.created_resolutions.count %><br>
+  Sponsored Resolutions: <%= user.sponsored_resolutions.count %><br>
+  Personal Directives Total: <%= user.personal_directives.count %><br>
+  Personal Directives Quality: <%= user.personal_directives.average(:quality) %>
+
+</li>

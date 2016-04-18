@@ -1,0 +1,23 @@
+<% if user_signed_in? && !current_user.nil? %>
+    <% provide(:title, current_user.name) %>
+    <% @user = current_user %>
+    <div class="row">
+      <aside class="col-md-3">
+        <section class="user_info">
+            <%= render 'shared/user_info' %>
+        </section>
+
+      </aside>
+      <div class="col-md-9">
+        <h3>Crisis Updates(<%= @cs_feed.count %>)</h3>
+            <%= link_to "new crisis updates", new_crisis_update_path, :target => '_blank' if current_user[:type] == "Crisis"%>
+        <% if @cs_feed.any? %>
+
+            <ol class="directives">
+          <%= render "cs_feed" %>
+        </ol>
+      <% end %>
+      </div>
+    </div>
+<% end %>
+

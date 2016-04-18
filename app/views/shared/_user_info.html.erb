@@ -1,0 +1,12 @@
+<h1><%= current_user.name %></h1>
+<span><%= current_user.position %></span>
+<span><%= current_user.committee %></span>
+<span><%= link_to "My Mailbox", mailbox_inbox_path %>(unread: <%= unread_messages_count %>)</span>
+<span><%= link_to "Personal Directives", personal_directives_path %></span>
+<span><%= link_to "Public Resolutions", public_resolutions_path %></span>
+<span><%= link_to "Private Resolutions", private_resolutions_path if current_user[:type] == "Delegate" %></span>
+<span><%= link_to "Crisis Updates", crisis_updates_path %></span>
+<span><%= link_to "Delegate List", users_path if current_user.type == "Crisis" %></span>
+<span><%= link_to "Information", documents_path %></span>
+<span><%= link_to "Crisis Notes", notes_path if current_user[:type] == "Crisis"%></span>
+<span><%= link_to "Filter", 'directives#index' if current_user[:type] == "Crisis" %></span>

@@ -1,0 +1,12 @@
+<% directive = PersonalDirective.find_by(id: directive_id) %>
+<b>Rate Quality:</b>
+<%= link_to "1", directive_path(directive, :directive => {:quality => 1}),
+            :method => :put %>,
+<%= link_to "2", directive_path(directive, :directive => {:quality => 2}),
+             :method => :put %>,
+<%= link_to "3", directive_path(directive, :directive => {:quality => 3}),
+             :method => :put %>,
+<%= link_to "4", directive_path(directive, :directive => {:quality => 4}),
+             :method => :put %>,
+<%= link_to "5", directive_path(directive, :directive => {:quality => 5}),
+             :method => :put %>

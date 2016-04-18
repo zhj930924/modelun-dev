@@ -1,0 +1,6 @@
+<% if @cs_feed.any? %>
+  <ol class="directives">
+    <%= render partial: "crisis_updates/crisis_updates", collection: @cs_feed, as: 'directive' %>
+  </ol>
+  <%= will_paginate @cs_feed, :param_name => 'cs_page' %>
+<% end %>

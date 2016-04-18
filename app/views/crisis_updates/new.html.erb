@@ -1,0 +1,28 @@
+<h2>New Crisis Updates </h2>
+
+<%= form_for(@crisis_update) do |f| %>
+    <% if @crisis_update.errors.any? %>
+        <div id="error_explanation">
+          <h5><%= pluralize(@crisis_update.errors.count, "error") %> prohibited this crisis update from being saved:</h5>
+
+          <ul>
+            <% @crisis_update.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </div>
+
+    <div class="field">
+      <%= f.label :content %>
+      <%= f.text_area :content, :class => "tinymce" %>
+      <%= tinymce %>
+    </div>
+
+    <%= f.submit class: 'btn btn-primary' %>
+
+<% end %>

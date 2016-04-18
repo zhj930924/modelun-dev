@@ -1,0 +1,10 @@
+<%  directive = Directive.find_by(id: directive_id) %>
+<%= form_for(directive.sponsorships.find_by(user_id: current_user[:id]),
+             html: { id: "unsponsor_form", method: :delete }, remote: true) do |f| %>
+    <%= hidden_field_tag :user_id, current_user[:id] %>
+    <%= hidden_field_tag :directive_id, directive[:id] %>
+    <b>Sponsors</b>(<%= link_to 'unsponsor', "#", :onclick => "$('#unsponsor_form').submit()" %>):
+    <% directive.sponsors.each do |sponsor| %>
+        <%= sponsor.position %>
+    <% end %>
+<% end %>

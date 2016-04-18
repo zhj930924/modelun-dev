@@ -1,0 +1,9 @@
+<% if @rs_feed.any? %>
+
+  <ol class="directives">
+    <%= render partial: "private_resolutions", collection: @rs_feed, as: 'directive' %>
+  </ol>
+
+  <%= will_paginate @rs_feed, :param_name => 'rs_page' %>
+
+<% end %>

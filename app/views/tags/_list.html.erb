@@ -1,0 +1,26 @@
+<%# app/views/tags/_list.html.erb %>
+<div id="filterrific_results">
+
+  <div>
+    <%= page_entries_info tags # provided by will_paginate %>
+  </div>
+
+  <table>
+    <tr>
+      <th>Tag</th>
+      <th>Directive Title</th>
+      <th>Directive Type</th>
+      <th>Created at</th>
+    </tr>
+    <% tags.each do |tag| %>
+      <tr>
+        <td><%= link_to(tag.tag, tag_path(tag)) %></td>
+        <td><%= @tag.directives.title %></td>
+        <td><%= @tag.directives.type %></td>
+        <td><%= @tag.directives.created_at %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= will_paginate tags # provided by will_paginate %>

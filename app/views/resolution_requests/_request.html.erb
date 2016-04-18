@@ -1,0 +1,9 @@
+<% directive = Directive.find_by(id: directive_id) %>
+<%= form_for(directive.requests.build, remote: true, html: { id: "request_form"}) do |f| %>
+    <%= hidden_field_tag :user_id, current_user[:id] %>
+    <%= hidden_field_tag :directive_id, directive_id %>
+    <b>Sponsors</b>(<%= link_to 'request sponsorship', "#", :onclick => "$('#request_form').submit()" %>):
+    <% directive.sponsors.each do |sponsor| %>
+        <%= sponsor.position %>
+    <% end %>
+<% end %>

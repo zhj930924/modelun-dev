@@ -1,0 +1,128 @@
+                  Prefix Verb   URI Pattern                             Controller#Action
+        new_user_session GET    /users/sign_in(.:format)                devise/sessions#new
+            user_session POST   /users/sign_in(.:format)                devise/sessions#create
+    destroy_user_session DELETE /users/sign_out(.:format)               devise/sessions#destroy
+           user_password POST   /users/password(.:format)               devise/passwords#create
+       new_user_password GET    /users/password/new(.:format)           devise/passwords#new
+      edit_user_password GET    /users/password/edit(.:format)          devise/passwords#edit
+                         PATCH  /users/password(.:format)               devise/passwords#update
+                         PUT    /users/password(.:format)               devise/passwords#update
+cancel_user_registration GET    /users/cancel(.:format)                 devise/registrations#cancel
+       user_registration POST   /users(.:format)                        devise/registrations#create
+   new_user_registration GET    /users/sign_up(.:format)                devise/registrations#new
+  edit_user_registration GET    /users/edit(.:format)                   devise/registrations#edit
+                         PATCH  /users(.:format)                        devise/registrations#update
+                         PUT    /users(.:format)                        devise/registrations#update
+                         DELETE /users(.:format)                        devise/registrations#destroy
+                    root GET    /                                       static_pages#home
+           mailbox_inbox GET    /mailbox/inbox(.:format)                mailbox#inbox
+            mailbox_sent GET    /mailbox/sent(.:format)                 mailbox#sent
+           mailbox_trash GET    /mailbox/trash(.:format)                mailbox#trash
+      reply_conversation POST   /conversations/:id/reply(.:format)      conversations#reply
+      trash_conversation POST   /conversations/:id/trash(.:format)      conversations#trash
+    untrash_conversation POST   /conversations/:id/untrash(.:format)    conversations#untrash
+           conversations GET    /conversations(.:format)                conversations#index
+                         POST   /conversations(.:format)                conversations#create
+        new_conversation GET    /conversations/new(.:format)            conversations#new
+       edit_conversation GET    /conversations/:id/edit(.:format)       conversations#edit
+            conversation GET    /conversations/:id(.:format)            conversations#show
+                         PATCH  /conversations/:id(.:format)            conversations#update
+                         PUT    /conversations/:id(.:format)            conversations#update
+                         DELETE /conversations/:id(.:format)            conversations#destroy
+                 contact GET    /contact(.:format)                      static_pages#contact
+                   about GET    /about(.:format)                        static_pages#about
+                user_all GET    /user/all(.:format)                     users#index
+                   notes GET    /notes(.:format)                        static_pages#notes
+          crisis_updates GET    /crisis_updates(.:format)               crisis_updates#crisis_updates
+      public_resolutions GET    /public_resolutions(.:format)           resolutions#public_resolutions
+     private_resolutions GET    /private_resolutions(.:format)          resolutions#private_resolutions
+   resolution_management GET    /resolution_management(.:format)        resolutions#resolution_management
+                   users GET    /users(.:format)                        users#index
+                         POST   /users(.:format)                        users#create
+                new_user GET    /users/new(.:format)                    users#new
+               edit_user GET    /users/:id/edit(.:format)               users#edit
+                    user GET    /users/:id(.:format)                    users#show
+                         PATCH  /users/:id(.:format)                    users#update
+                         PUT    /users/:id(.:format)                    users#update
+                         DELETE /users/:id(.:format)                    users#destroy
+                  crises GET    /crises(.:format)                       users#index {:type=>"Crisis"}
+                         POST   /crises(.:format)                       users#create {:type=>"Crisis"}
+              new_crisis GET    /crises/new(.:format)                   users#new {:type=>"Crisis"}
+             edit_crisis GET    /crises/:id/edit(.:format)              users#edit {:type=>"Crisis"}
+                  crisis GET    /crises/:id(.:format)                   users#show {:type=>"Crisis"}
+                         PATCH  /crises/:id(.:format)                   users#update {:type=>"Crisis"}
+                         PUT    /crises/:id(.:format)                   users#update {:type=>"Crisis"}
+                         DELETE /crises/:id(.:format)                   users#destroy {:type=>"Crisis"}
+               delegates GET    /delegates(.:format)                    users#index {:type=>"Delegate"}
+                         POST   /delegates(.:format)                    users#create {:type=>"Delegate"}
+            new_delegate GET    /delegates/new(.:format)                users#new {:type=>"Delegate"}
+           edit_delegate GET    /delegates/:id/edit(.:format)           users#edit {:type=>"Delegate"}
+                delegate GET    /delegates/:id(.:format)                users#show {:type=>"Delegate"}
+                         PATCH  /delegates/:id(.:format)                users#update {:type=>"Delegate"}
+                         PUT    /delegates/:id(.:format)                users#update {:type=>"Delegate"}
+                         DELETE /delegates/:id(.:format)                users#destroy {:type=>"Delegate"}
+                comments GET    /comments(.:format)                     comments#index
+                         POST   /comments(.:format)                     comments#create
+             new_comment GET    /comments/new(/:parent_id)(.:format)    comments#new
+              directives GET    /directives(.:format)                   directives#index
+                         POST   /directives(.:format)                   directives#create
+           new_directive GET    /directives/new(.:format)               directives#new
+          edit_directive GET    /directives/:id/edit(.:format)          directives#edit
+               directive GET    /directives/:id(.:format)               directives#show
+                         PATCH  /directives/:id(.:format)               directives#update
+                         PUT    /directives/:id(.:format)               directives#update
+                         DELETE /directives/:id(.:format)               directives#destroy
+     personal_directives GET    /personal_directives(.:format)          personal_directives#index
+                         POST   /personal_directives(.:format)          personal_directives#create
+  new_personal_directive GET    /personal_directives/new(.:format)      personal_directives#new
+ edit_personal_directive GET    /personal_directives/:id/edit(.:format) personal_directives#edit
+      personal_directive GET    /personal_directives/:id(.:format)      personal_directives#show
+                         PATCH  /personal_directives/:id(.:format)      personal_directives#update
+                         PUT    /personal_directives/:id(.:format)      personal_directives#update
+                         DELETE /personal_directives/:id(.:format)      personal_directives#destroy
+             resolutions GET    /resolutions(.:format)                  resolutions#index
+                         POST   /resolutions(.:format)                  resolutions#create
+          new_resolution GET    /resolutions/new(.:format)              resolutions#new
+         edit_resolution GET    /resolutions/:id/edit(.:format)         resolutions#edit
+              resolution GET    /resolutions/:id(.:format)              resolutions#show
+                         PATCH  /resolutions/:id(.:format)              resolutions#update
+                         PUT    /resolutions/:id(.:format)              resolutions#update
+                         DELETE /resolutions/:id(.:format)              resolutions#destroy
+                         GET    /crisis_updates(.:format)               crisis_updates#index
+                         POST   /crisis_updates(.:format)               crisis_updates#create
+       new_crisis_update GET    /crisis_updates/new(.:format)           crisis_updates#new
+      edit_crisis_update GET    /crisis_updates/:id/edit(.:format)      crisis_updates#edit
+           crisis_update GET    /crisis_updates/:id(.:format)           crisis_updates#show
+                         PATCH  /crisis_updates/:id(.:format)           crisis_updates#update
+                         PUT    /crisis_updates/:id(.:format)           crisis_updates#update
+                         DELETE /crisis_updates/:id(.:format)           crisis_updates#destroy
+                         POST   /notes(.:format)                        notes#create
+                    note DELETE /notes/:id(.:format)                    notes#destroy
+                    tags GET    /tags(.:format)                         tags#index
+                         POST   /tags(.:format)                         tags#create
+                 new_tag GET    /tags/new(.:format)                     tags#new
+                edit_tag GET    /tags/:id/edit(.:format)                tags#edit
+                     tag GET    /tags/:id(.:format)                     tags#show
+                         PATCH  /tags/:id(.:format)                     tags#update
+                         PUT    /tags/:id(.:format)                     tags#update
+                         DELETE /tags/:id(.:format)                     tags#destroy
+         directives_tags GET    /directives_tags(.:format)              directives_tags#index
+                         POST   /directives_tags(.:format)              directives_tags#create
+      new_directives_tag GET    /directives_tags/new(.:format)          directives_tags#new
+     edit_directives_tag GET    /directives_tags/:id/edit(.:format)     directives_tags#edit
+          directives_tag GET    /directives_tags/:id(.:format)          directives_tags#show
+                         PATCH  /directives_tags/:id(.:format)          directives_tags#update
+                         PUT    /directives_tags/:id(.:format)          directives_tags#update
+                         DELETE /directives_tags/:id(.:format)          directives_tags#destroy
+ resolution_sponsorships POST   /resolution_sponsorships(.:format)      resolution_sponsorships#create
+  resolution_sponsorship DELETE /resolution_sponsorships/:id(.:format)  resolution_sponsorships#destroy
+     resolution_signings GET    /resolution_signings(.:format)          resolution_signings#index
+                         POST   /resolution_signings(.:format)          resolution_signings#create
+  new_resolution_signing GET    /resolution_signings/new(.:format)      resolution_signings#new
+ edit_resolution_signing GET    /resolution_signings/:id/edit(.:format) resolution_signings#edit
+      resolution_signing GET    /resolution_signings/:id(.:format)      resolution_signings#show
+                         PATCH  /resolution_signings/:id(.:format)      resolution_signings#update
+                         PUT    /resolution_signings/:id(.:format)      resolution_signings#update
+                         DELETE /resolution_signings/:id(.:format)      resolution_signings#destroy
+     resolution_requests POST   /resolution_requests(.:format)          resolution_requests#create
+      resolution_request DELETE /resolution_requests/:id(.:format)      resolution_requests#destroy

@@ -1,0 +1,13 @@
+<% @receipts.each do |receipt| %>
+    <% message = receipt.message %>
+    <div class="media">
+      <div class="media-body">
+        <h5 class="media-heading">
+          <%= message.sender.position %> <br>
+          <small><b>Subject: </b><%= message.subject %></small><br>
+          <small><b>Date: </b><%= I18n.localize(message.created_at.in_time_zone('Eastern Time (US & Canada)'), :format => :short) %></small>
+        </h5>
+        <%= message.body %>
+      </div>
+    </div>
+<% end %>

@@ -1,0 +1,5 @@
+<%= form_for(@tag, html: { multipart: true }) do |f| %>
+<div class="field">
+    <%= f.text_field :tag %>
+    <%= f.submit "new tag", class: "btn btn-primary" %>
+</div>

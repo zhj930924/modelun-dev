@@ -1,0 +1,28 @@
+<% if user_signed_in? && !@user.nil? %>
+    <% provide(:title, @user.position) %>
+    <% @user = current_user %>
+    <div class="row">
+      <aside class="col-md-3">
+        <section class="user_info">
+          <%= render 'shared/user_info' %>
+        </section>
+        <% if current_user[:type] == "Delegate" %>
+        <% end %>
+      </aside>
+      <div class="col-md-9">
+        <% if !@rs_feed.nil? %>
+            <h3>Private Resolutions(<%= @rs_feed.count %>)</h3>
+            <%= link_to "new resolutions", new_resolution_path, :target => '_blank' %>
+            <ol class="directives">
+              <% if @rs_feed.any? %>
+                  <ol class="directives">
+                    <%= render partial: "private_resolutions", collection: @rs_feed, as: 'directive' %>
+                  </ol>
+                  <%= will_paginate @rs_feed, :param_name => 'rs_page' %>
+              <% end %>
+            </ol>
+        <% end %>
+      </div>
+    </div>
+<% end %>
+

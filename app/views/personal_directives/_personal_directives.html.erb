@@ -1,0 +1,80 @@
+<li id="directive-<%= directive.id %>">
+  <span class="content">
+    <b>Authors: </b>
+    <% directive.users.each do |user| %>
+    <%= user.position %>,
+    <% end %>
+  </span>
+  <span class="content" >
+  <% if current_user.type == "Crisis" %>
+    <% if !directive.claim %>
+    <b>Unclaimed(<%= link_to "claim", directive_path(directive, :directive => {:claim => true}),
+                          :method => :put,
+                          :confirm => "Are you sure?" %>):</b>
+    <% else %>
+    <b>Claimed</b>
+    <% end %>
+  </span>
+    <span class="content">
+      <% if !directive.quality.nil? %>
+        <b>Quality Rating: </b>
+          <%= directive.quality %>
+      <% else %>
+        <%= render 'personal_directives/score', :directive_id => directive.id %>
+      <% end %>
+    </span>
+  <% end %>
+  <span class= "content">
+    <b>Posted: </b>
+    <%= I18n.l directive.created_at.in_time_zone('Eastern Time (US & Canada)') , :format => :short  %>
+  </span>
+  <% if current_user[:type] == "Crisis" %>
+    <span class = "content">
+      <b>Tags: </b>
+      <% directive.tags.each do |tag| %>
+            #<%= tag.tag %>
+      <% end %>
+      <%= link_to "new tags",
+                  :controller => "tags",
+                  :action => "new",
+                  :directive_id => directive.id %>
+    </span>
+  <% end %>
+  <span class= "content">
+    <b>Title: </b>
+    <%= directive.title %>
+  </span>
+  <span class= "content">
+    <b>Content: </b><br>
+    <%= render inline: directive.content %>
+    <%= image_tag directive.picture.url if directive.picture? %>
+  </span>
+  <span class= "content">
+    <% if (directive.users.include?(current_user) && directive[:editable] == true &&
+       !directive.comments.any?) or current_user.admin == true %>
+      <b>Avaliable Actions: </b>
+      <%= link_to "delete", directive, method: :delete,
+                                       data: { confirm: "You sure?" } %>
+      <%= link_to "edit", 
+                        :controller => "directives",
+                        :action => "edit",
+                        :id => directive.id %>
+    <% end %>
+
+
+  </span>
+  <span class="content">
+    <br>
+    <b>Replies </b><% if !directive.comments.any? %>
+        (<%= link_to "new reply",
+                {:controller => "comments",
+                :action => "new",
+                :function => "Crisis Replies",
+                :directive_id => directive.id},
+                :target => "_blank"
+                 %>)
+        <% end %>:
+    <%= comments_tree_for directive.comments.hash_tree %>
+  </span>
+</li>
+<hr style="height: 5px; border: 0px solid black; border-top-width: 1px;" />

@@ -1,0 +1,26 @@
+<% if user_signed_in? && !current_user.nil? %>
+<% if current_user[:type] == "Crisis" %>
+    <% provide(:title, current_user.name) %>
+    <% @user = current_user %>
+    <div class="row">
+      <aside class="col-md-4">
+        <section class="user_info">
+            <%= render 'shared/user_info' %>
+        </section>
+        <h4>New Notes</h4>
+        <span>
+            <%= render 'directives/form' %>
+        </span>
+      </aside>
+      <div class="col-md-8">
+      <% if @user.notes.any? %>
+        <h3>Crisis Notebook(<%= @user.notes.count %>)</h3>
+        <ol class="directives">
+          <%= render "shared/note_feed" %>
+        </ol>
+      <% end %>
+      </div>
+    </div>
+<% end %>
+<% end %>
+

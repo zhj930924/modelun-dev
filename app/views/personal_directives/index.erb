@@ -1,0 +1,72 @@
+<% if user_signed_in? %>
+    <% provide(:title, current_user.position) %>
+    <% @user = current_user %>
+    <div class="row">
+      <aside class="col-md-3">
+        <section class="user_info">
+            <%= render 'shared/user_info' %>
+        </section>
+        <% if current_user.type == "Crisis" %>
+        <%= form_for_filterrific @filterrific, html: { id: 'filterrific-no-ajax-auto-submit' } do |f| %>
+            <div>
+              Search
+              <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+              <%= f.text_field(
+                      :search_query,
+                  ) %>
+            </div>
+            <div>
+              Tags
+              <%= f.select(
+                      :with_tag_name,
+                      @filterrific.select_options[:with_tag_name],
+                      { include_hidden: false, include_blank: '- Any -' },
+                      multiple:true,
+                      class: "chosen-select form-control"
+                  ) %>
+            </div>
+            <div>
+              User
+              <%= f.select(
+                      :with_user,
+                      @filterrific.select_options[:with_user],
+                      { include_hidden: false, include_blank: '- Any -' },
+                      multiple:true,
+                      class: "chosen-select form-control"
+                  ) %>
+            </div>
+            <div>
+              Unreplied Directives?
+              <%= check_box_tag('reply', value: "false", checked: false) %>
+            </div>
+
+            <%= f.submit "submit" %>
+
+
+        <% end %>
+        <% end %>
+        <% if current_user.type == "Delegate" %>
+            <%= form_for_filterrific @filterrific, html: { id: 'filterrific-no-ajax-auto-submit' } do |f| %>
+                <div>
+                  Search
+                  <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+                  <%= f.text_field(
+                          :search_query,
+                      ) %>
+                </div>
+                <%= f.submit "submit" %>
+            <% end %>
+        <% end %>
+      </aside>
+
+      <div class="col-md-9">
+
+          <h3>Personal Directives (Crisis Notes) (<%= @pd_feed.count %>)</h3>
+          <%= link_to "new personal directives", new_personal_directive_path, :target => '_blank' if current_user[:type] == "Delegate"%>
+          <ol class="directives">
+            <%= render "pd_feed" %>
+          </ol>
+      </div>
+    </div>
+<% end %>
+

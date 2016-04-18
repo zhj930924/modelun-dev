@@ -1,0 +1,147 @@
+<li id="directive-<%= directive.id %>">
+  <span class = "content">
+    <% @directive = directive %>
+
+    <b>Status<%= link_to "(make private)", directive_path(@directive, :directive => {:public => false}),
+                         :method => :put,
+                         :confirm => "Are you sure?" if directive.creators.include?(current_user) %>:</b>
+    <%= directive[:status] %>
+    <% if current_user.type == "Crisis" %> <br>
+      <b>Change Status:</b>
+      <%= link_to "draft,", directive_path(@directive, :directive => {:status => "Draft"}), :method => :put %>
+      <%= link_to "on floor,", directive_path(@directive, :directive => {:status => "On The Floor"}), :method => :put %>
+      <%= link_to "pass,", directive_path(@directive, :directive => {:status => "Passed!"}), :method => :put %>
+      <%= link_to "fail,", directive_path(@directive, :directive => {:status => "Failed!"}), :method => :put %>
+    <% end %>
+    <br>
+    <b>Creators:</b>
+    <% directive.creators.each do |creator| %>
+      <%= creator.position %>
+    <% end %>
+    <br>
+
+    <% unless directive.creators.include?(current_user) %>
+        <div id="content">
+          <b>Sponsors</b><% if directive.requestors.include?(current_user) && !directive.sponsors.include?(current_user) && current_user.type == "Delegate" %>
+              (<%= link_to "unrequest", resolution_requests_path(:directive_id => directive.id), :method => :delete %>)
+          <% elsif !directive.requestors.include?(current_user) && !directive.sponsors.include?(current_user) && current_user.type == "Delegate" %>
+              (<%= link_to "request", resolution_requests_path(:html_options => {:method => :post}, :directive_id => directive.id)  %>)
+          <% elsif directive.sponsors.include?(current_user) && current_user.type == "Delegate" %>
+              (<%= link_to "unsponsor", resolution_sponsorships_path(:directive_id => directive.id), :method => :delete  %>)
+          <% end %>:
+          <% directive.sponsors.each do |sponsor| %>
+              <%= sponsor.position %>,
+          <% end %>
+          <br>
+        </div>
+    <% end %>
+
+    <% if directive.creators.include?(current_user) %>
+      <span class="content">
+        <b>Sponsorship Requests: </b>
+        <% directive.requestors.each do |sponsor| %>
+              <% if !directive.sponsors.include?(sponsor) %>
+                <%= sponsor.position %>,
+              <% end %>
+          <% end %>
+      </span>
+    <% end %>
+
+    <% unless directive.creators.include?(current_user) %>
+      <span id="content">
+          <b>Signers</b>:<% if directive.signers.include?(current_user) && current_user.type == "Delegate" %>
+              (<%= link_to "unsign", resolution_signings_destroy_path(:directive_id => directive.id), :method => :delete %>)
+      <% elsif !directive.signers.include?(current_user) && current_user.type == "Delegate" %>
+              (<%= link_to "sign", resolution_signings_create_path(:html_options => {:method => :post}, :directive_id => directive.id)  %>)
+
+      <% end %>:
+
+          <% directive.signers.each do |sponsor| %>
+              <%= sponsor.position %>,
+          <% end %>
+        </span>
+      <% end %>
+
+
+      <span class="content">
+        <b>Posted: </b>
+        <%= I18n.l directive.created_at.in_time_zone('Eastern Time (US & Canada)'), :format => :short %>
+      </span>
+
+
+
+  <% if current_user[:type] == "Crisis" %>
+    <span class="content">
+      <b>Tags: </b>
+      <% directive.tags.each do |tag| %>
+            #<%= tag.tag %>
+      <% end %>
+      <%= link_to "new tags",
+                  {:controller => "tags",
+                  :action => "new",
+                  :directive_id => directive.id},
+                  :target => '_blank'%>
+    </span>
+  <% end %>
+  <span class="content">
+    <b>Title:</b>
+    <%= directive.title %>
+  </span>
+
+
+
+  <span class="content">
+    <b>Content:</b> <br>
+    <%= render inline: directive.content %>
+    <%= image_tag directive.picture.url if directive.picture? %>
+  </span>
+
+  <% if current_user.type == "Delegate" %>
+  <span class="content">
+    <b>Avaliable Actions:</b>
+
+    <% if directive.creators.include?(current_user) or current_user.admin == true %>
+      <%= link_to "delete", directive, method: :delete,
+                  data: {confirm: "You sure?"} %>,
+        <%= link_to "edit",
+                    {:controller => "directives",
+                    :action => "edit",
+                    :id => directive.id},
+                    :target => '_blank'%>,
+    <% end %>
+    <% if directive.sponsors.include?(current_user) or directive.creators.include?(current_user) %>
+    <%= link_to "friendly amendaments",
+                {:controller => "comments",
+                :action => "new",
+                :directive_id => directive.id,
+                :function => "Friendly Amendaments"},
+                :target => '_blank'%>,
+    <% end %>
+
+    <%= link_to "unfriendly amendaments",
+                {:controller => "comments",
+                :action => "new",
+                :directive_id => directive.id,
+                :function => "Unfriendly Amendaments"},
+                :target => '_blank'%>,
+
+    <% if directive.creators.include?(current_user) %>
+    <%= link_to "resolution management",
+                {:controller => "resolutions",
+                :action => "resolution_management",
+                :directive_id => directive.id},
+                :target => '_blank'%>
+    <% end %>
+
+  </span>
+
+
+  <% end %>
+
+  <span class="content">
+  <b>Amendaments:</b><br><br>
+    <%= comments_tree_for directive.comments.hash_tree %>
+  </span>
+  </span>
+</li>
+<hr style="height: 5px; border: 0px solid black; border-top-width: 1px;"/>

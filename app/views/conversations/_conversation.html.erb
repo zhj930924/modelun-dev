@@ -1,0 +1,17 @@
+<div class="media">
+  <div class="media-body">
+    <h5 class="media-heading">
+      <% conversation.recipients.each do |recipient| %>
+          <% if recipient != current_user %>
+          <%= recipient.position %>,
+          <% end %>
+      <% end %>
+          <br>
+      <small><b>Subject: </b><%= conversation.subject %></small><br>
+      <small><b>Date: </b><%= I18n.l(conversation.messages.last.created_at.in_time_zone('Eastern Time (US & Canada)'),
+                              :format => :short) %></small>
+    </h5>
+    <%= truncate conversation.messages.last.body, length: 145 %>
+    <%= link_to "View", conversation_path(conversation) %>
+  </div>
+</div>

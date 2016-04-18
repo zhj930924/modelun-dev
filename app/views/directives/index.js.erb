@@ -1,0 +1,4 @@
+<% js = escape_javascript(
+    render('shared/feed')) %>
+
+$("#filterrific_results").html("<%= js %>");

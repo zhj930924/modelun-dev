@@ -1,0 +1,37 @@
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <h1><%= current_user.name %></h1>
+                </li>
+                <li>
+                    <span><%= current_user.position %></span>
+                </li>
+                <li>
+                    <span><%= current_user.committee %></span>
+                </li>
+                <li>
+                    <span><%= link_to "view my profile", current_user %></span>
+                </li>
+                <li>
+                    <span><%= link_to "my mailbox", mailbox_inbox_path %></span>
+                </li>
+                <li>
+                    <span><%= link_to "personal directives", personal_directives_path %></span>
+                </li>
+                <li>
+                    <span><%= link_to "committee directives", resolutions_path %></span>
+                </li>
+                <li>
+                    <span><%= link_to "crisis updates", crisis_updates_path %></span>
+                </li>
+                <li>
+                    <span><%= link_to "delegate list", users_path %></span>
+                </li>
+                <li>
+                    <span><%= link_to "crisis notes", notes_path if current_user[:type] == "Crisis"%></span>
+                </li>
+                <li>
+                    <span><%= link_to "filter", 'directives#index' if current_user[:type] == "Crisis" %></span>
+                </li>
+            </ul>
+        </div>

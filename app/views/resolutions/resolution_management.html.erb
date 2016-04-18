@@ -1,0 +1,81 @@
+<% directive = Directive.find_by(id: params[:directive_id]) %>
+<h1>Current Resolution</h1>
+<div class="well">
+    <p>
+    Below display all existing Sponsors and Signers of your resolution. At this page,
+    you can remove current sponsors/signatures or add new sponsors/signatures. 
+    </p>
+    <h5>
+      <b>Sponsorship Requests: </b>
+      <% directive.requestors.each do |sponsor| %>
+          <% if !directive.sponsors.include?(sponsor) %>
+            <%= sponsor.position %> ,
+          <% end %>
+      <% end %>
+    </h5>
+    <h5>
+        <b>Sponsors: </b>
+        <% directive.sponsors.each do |sponsor| %>
+            <%= sponsor.position %> ,
+        <% end %>
+    </h5>
+    <h5>
+        <b>Signers: </b>
+        <% directive.signers.each do |signer| %>
+            <%= signer.position %> ,
+        <% end %>
+    </h5>    
+    
+</div>
+<h4>Resolution Content</h4>
+
+<span>
+    <b>Title:</b> <%= directive.title %> <br>
+    <b>Content:</b> <br> <%= render inline: directive.content %> <br>
+</span>
+
+<h4>Add New Sponsors</h4>
+
+<%= form_for(@sponsorship) do |f| %>
+  <% non_sponsors = [] %> 
+	<% Delegate.where(committee: current_user.committee).all.each do |s| %>
+	    <% if !directive.sponsors.include?(s) && !directive.signers.include?(s) && 
+	    !directive.creators.include?(s) %>
+	    <% non_sponsors << [s.position, s.id] %>
+	    <% end %>
+	    <% end %>
+  <%= hidden_field_tag :directive_id, directive.id %>
+  <%= f.select :user_id, options_for_select(non_sponsors) %>
+  <%= f.submit "Add Sponsor", class: 'btn btn-primary' %>
+  
+<% end %>
+
+<h4>Remove Existing Signers</h4>
+
+<%= form_for(@signature, :html => { :method => :delete }) do |f| %>
+  <% signers= [] %>
+	<% directive.signers.all.each do |s| %>
+	  <% signers << [s.position, s.id] %>
+	<% end %>
+  <%= hidden_field_tag :directive_id, directive.id %>
+  <%= f.select :user_id, options_for_select(signers) %>
+  <%= f.submit "Delete Signers", class: 'btn btn-primary' %>
+  
+<% end %>
+
+
+<h4>Add New Signers</h4>
+
+<%= form_for(@signature) do |f| %>
+  <% non_signers = [] %> 
+	<% Delegate.where(committee: current_user.committee).all.each do |s| %>
+	    <% if !directive.sponsors.include?(s) && !directive.signers.include?(s) && 
+	    !directive.creators.include?(s) %>
+	    <% non_signers << [s.position, s.id] %>
+	    <% end %>
+	    <% end %>
+  <%= hidden_field_tag :directive_id, directive.id %>
+  <%= f.select :user_id, options_for_select(non_signers) %>
+  <%= f.submit "Add Signer", class: 'btn btn-primary' %>
+  
+<% end %>

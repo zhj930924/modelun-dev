@@ -1,0 +1,13 @@
+toolbar:
+  - styleselect | bold italic | undo redo
+  - image | link
+plugins:
+  - image
+  - link
+setting:
+  function(ed) {
+    ed.on('init', function()
+    {
+        this.getDoc().body.style.fontSize = '20px';
+    });
+  }

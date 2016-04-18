@@ -1,0 +1,41 @@
+<li id="directive-<%= directive.id %>">
+  <span class= "content">
+    <b>Posted: </b>
+    <%= I18n.l directive.created_at.in_time_zone('Eastern Time (US & Canada)') , :format => :short  %>
+  </span>
+  <% if current_user[:type] == "Crisis" %>
+    <span class = "content">
+      <b>Tags: </b>
+      <% directive.tags.each do |tag| %>
+            #<%= tag.tag %>
+      <% end %>
+      <%= link_to "new tags",
+                  :controller => "tags",
+                  :action => "new",
+                  :directive_id => directive.id %>
+    </span>
+  <% end %>
+  <span class= "content">
+    <b>Title: </b>
+    <%= directive.title %>
+  </span>
+  <span class= "content">
+    <b>Content: </b><br>
+    <%= render inline: directive.content %>
+    <%= image_tag directive.picture.url if directive.picture? %>
+  </span>
+  <span class= "content">
+    <% if directive.users.include?(current_user) && directive[:editable] == true &&
+        !directive.comments.any? %>
+      <b>Avaliable Actions: </b>
+        <%= link_to "delete", directive, method: :delete,
+                    data: { confirm: "You sure?" } %>
+        <%= link_to "edit",
+                    :controller => "directives",
+                    :action => "edit",
+                    :id => directive.id %>
+    <% end %>
+
+
+  </span>
+<hr style="height: 5px; border: 0px solid black; border-top-width: 1px;" />

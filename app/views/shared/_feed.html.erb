@@ -1,0 +1,20 @@
+<% if @feed_items.any? %>
+  <ol class="directives">
+    <% @feed_items.each do |item| %>
+        <div class = "content">
+          <b>Type: </b>
+          <%= item.type %>
+        </div>
+    <% if item.type == "Resolution" %>
+        <%= render partial: "resolutions/public_resolutions", locals: {directive: item} %>
+    <% elsif item.type == "PersonalDirective" %>
+        <%= render partial: "personal_directives/personal_directives", locals: {directive: item} %>
+    <% elsif item.type == "CrisisUpdate" %>
+        <%= render partial: "crisis_updates/crisis_updates", locals: {directive: item} %>
+    <% else %>
+        <%= render partial: "directives/notes", locals: {directive: item} %>
+    <% end %>
+    <% end %>
+  </ol>
+  <%= will_paginate @feed_items, :param_name => 'page' %>
+<% end %>

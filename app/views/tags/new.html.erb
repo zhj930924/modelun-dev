@@ -1,0 +1,70 @@
+<h1>New Tag</h1>
+<div class="well">
+    <p>
+    Below display all existing tags in the database, if what you seek already exists, 
+    please select simply select one of them in the dropdown menu and click "submit". If you wish to
+    create new tag, please use the text box to submit your directive. 
+    </p>
+    <h5>
+        <% Tag.all.each do |tag| %>
+            #<%= tag.tag %>,
+        <% end %>
+    </h5>
+</div>
+<h4>Directive Content</h4>
+<% directive =  Directive.find_by(id: params[:directive_id]) %>
+<%= render inline: directive.content %>
+
+<h4>Form for new tags</h4>
+
+<%= form_for(@tag) do |f| %>
+  <% if @tag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being created:</h2>
+
+      <ul>
+        <% @tag.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :tag %>
+    <%= f.text_area :tag, class: 'form-control', required: true %>
+  </div>
+  <%= f.hidden_field :directive_id, :value => params[:directive_id] %>
+
+  <%= f.submit class: 'btn btn-primary' %>
+  
+<% end %>
+
+<h4>Form for current tags</h4>
+
+<%= form_for(@relationship) do |f| %>
+  <div><%= hidden_field_tag :directive_id, params[:directive_id] %>
+  <% tags = [] %> 
+	<% Tag.all.each do |t| %>
+    <% if !directive.tags.include?(t) %>
+	  <% tags << t.tag %>
+    <% end %>
+	<% end %>
+  <%= f.select :tag, options_for_select(tags) %>
+  
+  </div>
+  <%= f.submit "Create Link", class: "btn btn-primary" %>
+<% end %>
+
+<h4>Remove Association</h4>
+
+<%= form_for(@relationship, :html => { :method => :delete }) do |f| %>
+    <% tags= [] %>
+    <% directive.tags.all.each do |s| %>
+        <% tags << [s.tag, s.id] %>
+    <% end %>
+    <%= hidden_field_tag :directive_id, directive.id %>
+    <%= f.select :tag_id, options_for_select(tags) %>
+    <%= f.submit "Delete Tags", class: 'btn btn-primary' %>
+
+<% end %>

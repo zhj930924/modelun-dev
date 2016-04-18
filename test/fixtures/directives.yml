@@ -1,0 +1,4 @@
+world:
+    title: The world is ending
+    content: JK
+    type: CrisisUpdate

@@ -1,0 +1,50 @@
+<li id="directive-<%= directive.id %>">
+  <span class="content">
+    <b>Author:</b>
+    <% directive.users.each do |user| %>
+    <%= link_to user.name, user %>
+    <% end %>
+  </span>
+  <span class= "content">
+    <b>Title:</b>
+    <%= directive.title %>
+  </span>
+  <span class="content">
+    <b>Content:</b> <br>
+    <%= directive.content %>
+    <%= image_tag directive.picture.url if directive.picture? %>
+  </span>
+  <span class="timestamp">
+    Posted <%= directive.created_at %>.
+    
+      
+      <%= link_to "delete", directive, method: :delete,
+                                       data: { confirm: "You sure?" } %>
+      <%= link_to "edit", 
+                  :controller => "directives",
+                  :action => "edit",
+                  :directive_id => directive.id %>
+    <% if directive.type == "PersonalDirective" %>
+      <%= link_to "reply", 
+            :controller => "comments", 
+            :action => "new", 
+            :directive_id => directive.id %>
+    <% end %>
+  </span>
+  <% if current_user[:type] == "Crisis" %>
+    <span>
+      <% directive.tags.each do |tag| %>
+        #<%= tag.tag %>  
+    </span>
+  <% end %>
+    <span>
+      <%= link_to "new tags", 
+            :controller => "tags", 
+            :action => "new", 
+            :directive_id => directive.id %>
+    </span>
+  <% end %>
+  <span>
+    <%= comments_tree_for directive.comments.hash_tree %>
+  </span>
+</li>

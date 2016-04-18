@@ -1,0 +1,129 @@
+<li id="directive-<%= directive.id %>">
+  <span class = "content">
+    <% if directive.creators.include?(current_user) %>
+
+
+            <b>Status(<%= link_to "make public", directive_path(directive, :directive => {:public => true}),
+                                 :method => :put,
+                                 :confirm => "Are you sure?" %>):</b>
+            <% if !directive[:public] %>
+                Private
+            <% else %>
+              <%= directive[:status] %>
+    <% end %>
+    <% end %>
+    <br>
+    <b>Creators:</b>
+    <% directive.creators.each do |creator| %>
+    <%= creator.position %>,
+    <% end %>
+    <br>
+
+    <% unless directive.creators.include?(current_user) %>
+  <span id="content">
+    <b>Sponsors</b>:<% if directive.sponsors.include?(current_user) %>(<%= link_to "unsponsor", resolution_sponsorships_path(:directive_id => directive.id), :method => :delete  %>)
+    <% end %>
+
+        <% directive.sponsors.each do |sponsor| %>
+          <%= sponsor.position %>
+        <% end %>
+        <br>
+  </span>
+    <% end %>
+  <% if directive.creators.include?(current_user) %>
+  <span class="content">
+    <b>Sponsorship Requests: </b>
+    <% directive.requestors.each do |sponsor| %>
+          <% if !directive.sponsors.include?(sponsor) %>
+            <%= sponsor.position %> ,
+          <% end %>
+      <% end %>
+  <% end %>
+  </span>
+    <% unless directive.creators.include?(current_user) %>
+      <span id="content">
+      <b>Signers</b>:(<% if directive.signers.include?(current_user) && current_user.type == "Delegate" %>
+              <%= link_to "unsign", resolution_signings_destroy_path(:directive_id => directive.id), :method => :delete %>
+      <% elsif !directive.signers.include?(current_user) && current_user.type == "Delegate" %>
+              <%= link_to "sign", resolution_signings_create_path(:html_options => {:method => :post}, :directive_id => directive.id)  %>
+
+      <% end %> ):
+
+        <% directive.signers.each do |sponsor| %>
+              <%= sponsor.position %>,
+          <% end %>
+        </span>
+      <% end %>
+  </span>
+  <span class= "content">
+    <b>Posted: </b>
+    <%= I18n.l directive.created_at.in_time_zone('Eastern Time (US & Canada)') , :format => :short  %>
+  </span>
+  <span class= "content">
+    <b>Title:</b>
+    <%= directive.title %>
+  </span>
+  <span class="content">
+    <b>Content:</b> <br>
+    <%= render inline: directive.content %>
+    <%= image_tag directive.picture.url if directive.picture? %>
+  </span>
+  <span class="content">
+    <b>Avaliable Actions:</b>
+    <% if directive.creators.include?(current_user) or current_user.admin == true  %>
+
+      <%= link_to "delete", directive, method: :delete,
+                  data: { confirm: "You sure?" } %>,
+        <%= link_to "edit",
+                    {:controller => "directives",
+                    :action => "edit",
+                    :id => directive.id},
+                    :target => "_blank"
+                    %>,
+    <% end %>
+    <% if directive.sponsors.include?(current_user) or directive.creators.include?(current_user) %>
+    <%= link_to "friendly amendaments",
+                {:controller => "comments",
+                :action => "new",
+                :directive_id => directive.id,
+                :function => "Friendly Amendaments"},
+                :target => "_blank" %>,
+    <% end %>
+    <%= link_to "unfriendly amendaments",
+                {:controller => "comments",
+                :action => "new",
+                :directive_id => directive.id,
+                :function => "Unfriendly Amendaments"},
+                :target => "_blank"%>,
+    <% if directive.creators.include?(current_user) %>
+    <%= link_to "resolution management",
+                {:controller => "resolutions",
+                :action => "resolution_management",
+                :directive_id => directive.id},
+                :target => "_blank"
+                %>
+
+    <% end %>
+  </span>
+
+  <% if current_user[:type] == "Crisis" %>
+    <span>
+        <% directive.tags.each do |tag| %>
+            #<%= tag.tag %>
+        <% end %>
+    </span>
+
+    <span>
+      <%= link_to "new tags",
+                  {:controller => "tags",
+                  :action => "new",
+                  :directive_id => directive.id},
+                  :target => "_blank" %>
+    </span>
+  <% end %>
+  <span class="content">
+  <b>Amendaments:</b><br><br>
+  <%= comments_tree_for directive.comments.hash_tree %>
+  </span>
+</li>
+<hr style="height: 5px; border: 0px solid black; border-top-width: 1px;" />
